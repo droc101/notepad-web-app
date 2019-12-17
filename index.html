@@ -1,0 +1,41 @@
+<html>
+<head>
+	<title>Notepad</title>
+	<style type="text/css">textarea {
+          	width: 100%;
+            height: 89%;
+      		resize: none;
+      		color: #eee;
+      		background-color: #111;
+      		border: none;
+      	}
+     	body {
+          	background-color: #111;
+          	color: #eee;
+         	padding: 0px;
+          	margin: 0px;
+      	}
+      	input {
+          	padding: 5px;
+      	}
+      	button {
+          	padding: 5px;
+      	}
+	</style>
+	<script>
+       	function download(text, filename) {
+      		var fileContent = text;
+	  		var bb = new Blob([fileContent ], { type: 'text/plain' });
+			var a = document.createElement('a');
+			a.download = filename;
+			a.href = window.URL.createObjectURL(bb);
+			a.click();
+        }
+  	</script>
+</head>
+<body>
+<p><span style="font-family:arial,helvetica,sans-serif;"><label>File Name:&nbsp;<input id="filename" type="text" value="download.txt" /></label><button id="download" onclick="download(document.getElementById('textarea').value, document.getElementById('filename').value);">Download</button></span></p>
+
+<p><span style="font-family:arial,helvetica,sans-serif;"><textarea id="textarea" placeholder="Text Here"></textarea></span></p>
+</body>
+</html>
