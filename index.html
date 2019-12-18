@@ -1,17 +1,17 @@
 <html>
 <head>
-  	<link rel='icon' href='favicon.png' type='image/x-icon'/ >
+	<link href="favicon.png" rel="icon" type="image/x-icon" />
 	<title>Notepad</title>
 	<style type="text/css">textarea {
           	width: 100%;
             height: 89%;
       		resize: none;
       		color: #eee;
-      		background-color: #111;
+      		background-color: #1b1842;
       		border: none;
       	}
      	body {
-          	background-color: #111;
+          	background-color: #1b1842;
           	color: #eee;
          	padding: 0px;
           	margin: 0px;
@@ -22,20 +22,54 @@
       	button {
           	padding: 5px;
       	}
+      	#div-ad{
+     		position:absolute;
+     		bottom:0;
+     		right:0;
+		}
+      	a {
+          	color: #eee;
+      	}
+      	select {
+       		padding: 5px;   
+      	}
 	</style>
 	<script>
        	function download(text, filename) {
-      		var fileContent = text;
-	  		var bb = new Blob([fileContent ], { type: 'text/plain' });
-			var a = document.createElement('a');
-			a.download = filename;
-			a.href = window.URL.createObjectURL(bb);
-			a.click();
+      		var fileContent = text;//set the content of the file
+	  		var bb = new Blob([fileContent ], { type: 'text/plain' });//make it a blob
+			var a = document.createElement('a');//create a link to download it
+			a.download = filename;//add the filename to the link
+			a.href = window.URL.createObjectURL(bb);//put the blob into it
+			a.click();//click the link
         }
+      	function printTextArea() {
+        childWindow = window.open('','childWindow','location=yes, menubar=yes, toolbar=yes');//open a window
+        childWindow.document.open();//make it a document
+        childWindow.document.write('<html><head><title>Print</title></head><body>');//add the html's starting tags
+        childWindow.document.write(document.getElementById('textarea').value.replace(/\n/gi,'<br>'));//add the textarea
+        childWindow.document.write('</body></html>');//close the html
+        childWindow.print();//print it and wait for completion
+        childWindow.document.close();//close the document
+        childWindow.close();//close the window
+      }
+      
+      function about() {
+        alert('Version 2.0\nBy Droc101');
+      }
+      
+      function newFile() {
+        if (confirm("Erase the current file? This cannot be undone.")) {
+        	document.getElementById('textarea').value = ""
+        }
+      }
+
   	</script>
 </head>
 <body>
-<p><span style="font-family:arial,helvetica,sans-serif;"><label>File Name:&nbsp;<input id="filename" type="text" value="download.txt" /></label><button id="download" onclick="download(document.getElementById('textarea').value, document.getElementById('filename').value);">Download</button></span></p>
+<p><span style="font-family:arial,helvetica,sans-serif;"><label><input id="filename" type="text" value="download.txt" /></label><button id="download" onclick="download(document.getElementById('textarea').value, document.getElementById('filename').value);">Download</button>|<button onclick="printTextArea()">Print</button>|<button id="abt" onclick="about();">About</button>|<button onclick="newFile()">New</button></span></p>
+
+<div id="div-ad"><a href="https://droc101.github.io">droc101.github.io</a></div>
 
 <p><span style="font-family:arial,helvetica,sans-serif;"><textarea id="textarea" placeholder="Text Here"></textarea></span></p>
 </body>
